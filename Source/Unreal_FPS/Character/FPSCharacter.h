@@ -34,4 +34,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMeshComponent* SKFPV;
 
+	//		!!! TUTORIAL STUFF, MIGHT DELETE LATER !!!
+	UFUNCTION(BlueprintCallable, Category = "Abilities")
+	void SpawnActor();
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AActor> actorBPToSpawn;
 };

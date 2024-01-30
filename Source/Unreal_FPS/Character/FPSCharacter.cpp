@@ -41,3 +41,13 @@ void AFPSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 
 	//EnhancedInputComponent->BindAction()
 }
+
+
+//		!!! TUTORIAL STUFF, MIGHT DELETE LATER !!!
+void AFPSCharacter::SpawnActor()
+{
+	FActorSpawnParameters spawnParams;
+	spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+
+	GetWorld()->SpawnActor<AActor>(actorBPToSpawn, GetActorTransform(), spawnParams);
+}
