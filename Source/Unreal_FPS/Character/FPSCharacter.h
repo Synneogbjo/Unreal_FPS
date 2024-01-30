@@ -29,7 +29,7 @@ public:
 
 	// Input Actions
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
-	UInputAction* MoveAction;
+	class UInputAction* MoveAction;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMeshComponent* SKFPV;

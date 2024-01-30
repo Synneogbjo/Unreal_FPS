@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Unreal_FPS/Character/FPSCharacter.h"
+#include "FPSCharacter.h"
 #include "EnhancedInputComponent.h"
-#include "EnhancedInputSubsystems.h"
+//#include "EnhancedInputSubsystems.h"
 
 // Sets default values
 AFPSCharacter::AFPSCharacter()
@@ -34,7 +34,10 @@ void AFPSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 
 
-	if (!EnhancedInputComponent) return;
+	//if (EnhancedInputComponent)
+	//{
+	//	
+	//}
 
 	//EnhancedInputComponent->BindAction()
 }
