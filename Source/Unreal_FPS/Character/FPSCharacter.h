@@ -7,6 +7,11 @@
 
 #include "FPSCharacter.generated.h"
 
+struct FInputActionValue;
+class UInputMappingContext;
+class UInputAction;
+class UCameraComponent;
+
 UCLASS()
 class UNREAL_FPS_API AFPSCharacter : public ACharacter
 {
@@ -27,12 +32,37 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	// Input Actions
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
-	class UInputAction* MoveAction;
+	/*
+	 * Components
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite);
+	UCameraComponent* FPCameraComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMeshComponent* SKFPV;
+
+	/*
+	 * Input Mapping Context and Actions
+	 */
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input");
+	UInputMappingContext* IMC;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
+	UInputAction* MoveAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
+	UInputAction* JumpAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
+	UInputAction* LookAtAction;
+
+	void Move(const FInputActionValue& value);
+	void LookAt(const FInputActionValue& value);
+
+	void Jump(const FInputActionValue& value);
+	void StopJumping(const FInputActionValue& value);
+
 
 	//		!!! TUTORIAL STUFF, MIGHT DELETE LATER !!!
 	UFUNCTION(BlueprintCallable, Category = "Abilities")
