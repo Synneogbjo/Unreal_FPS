@@ -36,10 +36,10 @@ public:
 	 * Components
 	 */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite);
-	UCameraComponent* FPCameraComponent;
+	UCameraComponent* FPVCameraComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	USkeletalMeshComponent* SKFPV;
+	USkeletalMeshComponent* FPVMesh;
 
 	/*
 	 * Input Mapping Context and Actions
@@ -62,6 +62,22 @@ public:
 
 	void Jump(const FInputActionValue& value);
 	void StopJumping(const FInputActionValue& value);
+
+	/*
+	 * Weapon
+	 */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
+	bool bHasWeapon;
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	void SetHasWeapon(bool bNewHasWeapon);
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	bool GetHasWeapon();
+
+	USkeletalMeshComponent* GetFPVMesh() const;
+
+	UCameraComponent* GetFPVCameraComponent() const;
 
 
 	//		!!! TUTORIAL STUFF, MIGHT DELETE LATER !!!

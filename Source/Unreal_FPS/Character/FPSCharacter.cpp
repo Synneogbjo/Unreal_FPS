@@ -18,13 +18,13 @@ AFPSCharacter::AFPSCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 
 	/* Camera Component */
-	FPCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("FPCamera"));
-	FPCameraComponent->SetupAttachment(GetCapsuleComponent());
-	FPCameraComponent->bUsePawnControlRotation = true;
+	FPVCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("FPCamera"));
+	FPVCameraComponent->SetupAttachment(GetCapsuleComponent());
+	FPVCameraComponent->bUsePawnControlRotation = true;
 
 	/* Skeletal Mesh Component */
-	SKFPV = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("FPSMesh"));
-	SKFPV->SetupAttachment(FPCameraComponent);
+	FPVMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("FPSMesh"));
+	FPVMesh->SetupAttachment(FPVCameraComponent);
 
 }
 
@@ -98,6 +98,26 @@ void AFPSCharacter::Jump(const FInputActionValue& value)
 void AFPSCharacter::StopJumping(const FInputActionValue& value)
 {
 
+}
+
+void AFPSCharacter::SetHasWeapon(bool bNewHasWeapon)
+{
+	bHasWeapon = bNewHasWeapon;
+}
+
+bool AFPSCharacter::GetHasWeapon()
+{
+	return bHasWeapon;
+}
+
+USkeletalMeshComponent* AFPSCharacter::GetFPVMesh() const
+{
+	return FPVMesh;
+}
+
+UCameraComponent* AFPSCharacter::GetFPVCameraComponent() const
+{
+	return FPVCameraComponent;
 }
 
 //		!!! TUTORIAL STUFF, MIGHT DELETE LATER !!!
