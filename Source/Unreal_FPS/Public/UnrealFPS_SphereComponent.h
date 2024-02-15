@@ -17,6 +17,8 @@ class UNREAL_FPS_API UUnrealFPS_SphereComponent : public USphereComponent
 {
 	GENERATED_BODY()
 
+public:
+
 	UPROPERTY(BlueprintAssignable, Category = "Interaction")
 	FOnPickUp OnPickUp;
 

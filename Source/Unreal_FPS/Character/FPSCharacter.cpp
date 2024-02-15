@@ -55,7 +55,6 @@ void AFPSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 {
 	UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 
-
 	if (!EnhancedInputComponent) return;
 
 	EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AFPSCharacter::Move);
@@ -68,8 +67,6 @@ void AFPSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 
 void AFPSCharacter::Move(const FInputActionValue& value)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Emerald, value.Get<FVector2D>().ToString());
-
 	FVector2D MovementVector = value.Get<FVector2D>();
 
 	if (Controller != nullptr)

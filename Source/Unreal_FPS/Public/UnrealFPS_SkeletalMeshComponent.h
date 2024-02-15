@@ -16,10 +16,35 @@ class UNREAL_FPS_API UUnrealFPS_SkeletalMeshComponent : public USkeletalMeshComp
 {
 	GENERATED_BODY()
 
+public:
+
+	UUnrealFPS_SkeletalMeshComponent();
+
 	AFPSCharacter* Character;
 
-	UFUNCTION(Blueprintable, Category = "Object")
+	UFUNCTION(Blueprintable, BlueprintCallable, Category = "Object")
 	void AttachComponentToPlayer(AFPSCharacter* TargetCharacter);
 
+	UFUNCTION()
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
+	/*
+	 * IMC and Actions
+	 */
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+	class UInputMappingContext* FireIMC;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+	class UInputAction* FireAction;
+
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	void Fire();
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Projectile")
+	TSubclassOf<UObject> Projectile;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WeaponSettings")
+	FVector GuntipOffset;
+
 };
