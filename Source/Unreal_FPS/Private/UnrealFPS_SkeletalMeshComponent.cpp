@@ -20,7 +20,7 @@ void UUnrealFPS_SkeletalMeshComponent::AttachComponentToPlayer(AFPSCharacter* Ta
 
 	const FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, true);
 
-	AttachToComponent(Character->GetFPVMesh(), AttachmentRules, FName(TEXT("AttachSocket")));
+	GetOwner()->AttachToComponent(Character->GetFPVMesh(), AttachmentRules, FName(TEXT("AttachSocket")));
 
 	Character->SetHasWeapon(true);
 
@@ -58,6 +58,11 @@ void UUnrealFPS_SkeletalMeshComponent::Fire()
 
 	const APlayerController* PlayerController = Cast<APlayerController>(Character->GetController());
 	const FRotator SpawnRotation = PlayerController->PlayerCameraManager->GetCameraRotation();
+
+	auto txt = GetOwner()->GetName();
+
+	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Cyan, txt);
+
 	const FVector SpawnLocation = GetOwner()->GetActorLocation() + SpawnRotation.RotateVector(GuntipOffset);
 
 	FActorSpawnParameters ActorSpawnParams;

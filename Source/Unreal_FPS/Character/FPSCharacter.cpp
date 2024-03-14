@@ -33,6 +33,8 @@ void AFPSCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	int num = 0;
+
 	// Adding the input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
@@ -59,9 +61,6 @@ void AFPSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 
 	EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AFPSCharacter::Move);
 	EnhancedInputComponent->BindAction(LookAtAction, ETriggerEvent::Triggered, this, &AFPSCharacter::LookAt);
-
-	EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &AFPSCharacter::Jump);
-	EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &AFPSCharacter::StopJumping);
 }
 
 
@@ -69,39 +68,23 @@ void AFPSCharacter::Move(const FInputActionValue& value)
 {
 	FVector2D MovementVector = value.Get<FVector2D>();
 
-	if (Controller == nullptr) return;
+	if (!Controller) return;
 	
 	AddMovementInput(GetActorForwardVector(), MovementVector.Y * MoveSpeed.Y);
 	AddMovementInput(GetActorRightVector(), MovementVector.X * MoveSpeed.X);
-	
+
+	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::White, TEXT("Moving"));
 }
 
 void AFPSCharacter::LookAt(const FInputActionValue& value)
 {
 	FVector2D LookAroundVector = value.Get<FVector2D>();
 
-	if (Controller == nullptr) return;
+	if (!Controller) return;
 	
 	AddControllerYawInput(LookAroundVector.X * CameraRotationSpeed.X);
 	AddControllerPitchInput(LookAroundVector.Y * CameraRotationSpeed.Y);
 	
-}
-
-void AFPSCharacter::Jump(const FInputActionValue& value)
-{
-	if (Controller == nullptr) return;
-
-	if (value.Get<bool>())
-	{
-		if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::White, TEXT("Jumped!"));
-
-		LaunchCharacter(FVector(0.f, 0.f, JumpStrength), false, true);
-	}
-}
-
-void AFPSCharacter::StopJumping(const FInputActionValue& value)
-{
-
 }
 
 void AFPSCharacter::SetHasWeapon(bool bNewHasWeapon)

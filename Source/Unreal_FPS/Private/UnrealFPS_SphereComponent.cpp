@@ -19,8 +19,6 @@ void UUnrealFPS_SphereComponent::BeginPlay()
 void UUnrealFPS_SphereComponent::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::White, "Collided");
-
 	AFPSCharacter* Character = Cast<AFPSCharacter>(OtherActor);
 	if (Character != nullptr)
 	{

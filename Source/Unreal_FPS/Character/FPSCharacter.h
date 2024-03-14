@@ -75,9 +75,6 @@ public:
 	void Move(const FInputActionValue& value);
 	void LookAt(const FInputActionValue& value);
 
-	void Jump(const FInputActionValue& value);
-	void StopJumping(const FInputActionValue& value);
-
 	/*
 	 * Weapon
 	 */
