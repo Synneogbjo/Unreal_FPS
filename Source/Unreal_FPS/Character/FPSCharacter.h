@@ -33,8 +33,23 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	/*
+	 * Movement Variables
+	 */
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+	FVector2D MoveSpeed;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+	FVector2D CameraRotationSpeed;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+	float JumpStrength;
+
+
+	/*
 	 * Components
 	 */
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite);
 	UCameraComponent* FPVCameraComponent;
 
@@ -66,6 +81,7 @@ public:
 	/*
 	 * Weapon
 	 */
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
 	bool bHasWeapon;
 
@@ -78,11 +94,6 @@ public:
 	USkeletalMeshComponent* GetFPVMesh() const;
 
 	UCameraComponent* GetFPVCameraComponent() const;
-
-
-	//		!!! TUTORIAL STUFF, MIGHT DELETE LATER !!!
-	UFUNCTION(BlueprintCallable, Category = "Abilities")
-	void SpawnActor();
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AActor> actorBPToSpawn;

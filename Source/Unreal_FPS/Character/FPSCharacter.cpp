@@ -69,27 +69,34 @@ void AFPSCharacter::Move(const FInputActionValue& value)
 {
 	FVector2D MovementVector = value.Get<FVector2D>();
 
-	if (Controller != nullptr)
-	{
-		AddMovementInput(GetActorForwardVector(), MovementVector.Y);
-		AddMovementInput(GetActorRightVector(), MovementVector.X);
-	}
+	if (Controller == nullptr) return;
+	
+	AddMovementInput(GetActorForwardVector(), MovementVector.Y * MoveSpeed.Y);
+	AddMovementInput(GetActorRightVector(), MovementVector.X * MoveSpeed.X);
+	
 }
 
 void AFPSCharacter::LookAt(const FInputActionValue& value)
 {
 	FVector2D LookAroundVector = value.Get<FVector2D>();
 
-	if (Controller != nullptr)
-	{
-		AddControllerYawInput(LookAroundVector.X);
-		AddControllerPitchInput(LookAroundVector.Y);
-	}
+	if (Controller == nullptr) return;
+	
+	AddControllerYawInput(LookAroundVector.X * CameraRotationSpeed.X);
+	AddControllerPitchInput(LookAroundVector.Y * CameraRotationSpeed.Y);
+	
 }
 
 void AFPSCharacter::Jump(const FInputActionValue& value)
 {
+	if (Controller == nullptr) return;
 
+	if (value.Get<bool>())
+	{
+		if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::White, TEXT("Jumped!"));
+
+		LaunchCharacter(FVector(0.f, 0.f, JumpStrength), false, true);
+	}
 }
 
 void AFPSCharacter::StopJumping(const FInputActionValue& value)
@@ -115,13 +122,4 @@ USkeletalMeshComponent* AFPSCharacter::GetFPVMesh() const
 UCameraComponent* AFPSCharacter::GetFPVCameraComponent() const
 {
 	return FPVCameraComponent;
-}
-
-//		!!! TUTORIAL STUFF, MIGHT DELETE LATER !!!
-void AFPSCharacter::SpawnActor()
-{
-	FActorSpawnParameters spawnParams;
-	spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
-
-	GetWorld()->SpawnActor<AActor>(actorBPToSpawn, GetActorTransform(), spawnParams);
 }
