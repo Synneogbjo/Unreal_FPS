@@ -39,6 +39,8 @@ void UUnrealFPS_SkeletalMeshComponent::AttachComponentToPlayer(AFPSCharacter* Ta
 		EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Triggered, this, &UUnrealFPS_SkeletalMeshComponent::Fire);
 	}
 
+	bCanFire = true;
+
 }
 
 void UUnrealFPS_SkeletalMeshComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -50,6 +52,12 @@ void UUnrealFPS_SkeletalMeshComponent::EndPlay(const EEndPlayReason::Type EndPla
 
 void UUnrealFPS_SkeletalMeshComponent::Fire()
 {
+	if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 0.1f, FColor::Cyan, TEXT("Tried to fire"));
+
+	if (!bCanFire) return;
+
+	if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 0.5f, FColor::Emerald, TEXT("FIRE!"));
+
 	if (Projectile == nullptr) return;
 
 	UWorld* World = GetWorld();
@@ -69,4 +77,13 @@ void UUnrealFPS_SkeletalMeshComponent::Fire()
 	ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
 
 	World->SpawnActor<AActor>(Projectile, SpawnLocation, SpawnRotation, ActorSpawnParams);
+
+	bCanFire = false;
+
+	World->GetTimerManager().SetTimer(FireTimerHandle, this, &UUnrealFPS_SkeletalMeshComponent::SetCanFireToTrue, FireCooldown);
+}
+
+void UUnrealFPS_SkeletalMeshComponent::SetCanFireToTrue()
+{
+	bCanFire = true;
 }

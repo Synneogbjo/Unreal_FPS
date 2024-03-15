@@ -41,10 +41,20 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void Fire();
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Projectile")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Firing")
 	TSubclassOf<UObject> Projectile;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "WeaponSettings")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Firing")
 	FVector GuntipOffset;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Firing")
+	float FireCooldown;
+
+	bool bCanFire;
+
+	FTimerHandle FireTimerHandle;
+
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	void SetCanFireToTrue();
 
 };
